@@ -46,11 +46,10 @@ public class MistakePanelTest {
   }
 
   @Test
-  public void arbitraryDamageDeathsAndEntranceAttemptsNeverBecomeMistakes() {
+  public void arbitraryDamageAndEntranceAttemptsNeverBecomeMistakes() {
     MistakeLedger l = new MistakeLedger();
     l.begin(TfaBoss.ARCHIVE_GUARDIAN, 1, 30, false);
-    for (String type :
-        Arrays.asList("Other damage", "Death", "Missing salve", "Possible Unknown attack"))
+    for (String type : Arrays.asList("Other damage", "Missing salve", "Possible Unknown attack"))
       l.observation("Player", type, 44, 2, 60, "Unagreed");
     assertTrue(l.current().events.isEmpty());
     l.observation("Player", "Possible Melee attack", 9, 2, 60, "Agreed");

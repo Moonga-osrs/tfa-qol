@@ -119,8 +119,14 @@ public class OcellusTrackerTest {
     tracker.onGameTick(new GameTick());
     assertTrue(ledger.active());
     assertEquals(1, ledger.encounters().size());
-    assertEquals(1, ledger.current().events.size());
-    assertEquals("Other", ledger.current().events.get(0).player);
+    assertEquals(2, ledger.current().events.size());
+    assertEquals(
+        "Other",
+        ledger.current().events.stream()
+            .filter(e -> !e.type.equals("Death"))
+            .findFirst()
+            .get()
+            .player);
   }
 
   @Test

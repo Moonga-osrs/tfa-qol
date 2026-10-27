@@ -81,9 +81,21 @@ public class BorkTrackerTest {
     when(client.getTickCount()).thenReturn(105);
     tracker.onGameTick(new GameTick());
     assertTrue(ledger.active());
-    assertEquals(1, ledger.current().events.size());
-    assertEquals("Other", ledger.current().events.get(0).player);
-    assertEquals("Possible Magic hit off prayer", ledger.current().events.get(0).type);
+    assertEquals(2, ledger.current().events.size());
+    assertEquals(
+        "Other",
+        ledger.current().events.stream()
+            .filter(e -> !e.type.equals("Death"))
+            .findFirst()
+            .get()
+            .player);
+    assertEquals(
+        "Possible Magic hit off prayer",
+        ledger.current().events.stream()
+            .filter(e -> !e.type.equals("Death"))
+            .findFirst()
+            .get()
+            .type);
   }
 
   @Test
@@ -160,8 +172,20 @@ public class BorkTrackerTest {
     when(client.getTickCount()).thenReturn(105);
     tracker.onGameTick(new GameTick());
     assertTrue(ledger.active());
-    assertEquals(1, ledger.current().events.size());
-    assertEquals("Other", ledger.current().events.get(0).player);
-    assertEquals("Possible Magic hit off prayer", ledger.current().events.get(0).type);
+    assertEquals(2, ledger.current().events.size());
+    assertEquals(
+        "Other",
+        ledger.current().events.stream()
+            .filter(e -> !e.type.equals("Death"))
+            .findFirst()
+            .get()
+            .player);
+    assertEquals(
+        "Possible Magic hit off prayer",
+        ledger.current().events.stream()
+            .filter(e -> !e.type.equals("Death"))
+            .findFirst()
+            .get()
+            .type);
   }
 }

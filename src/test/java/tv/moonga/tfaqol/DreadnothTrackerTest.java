@@ -108,7 +108,13 @@ public class DreadnothTrackerTest {
     tracker.onGameTick(new GameTick());
     assertEquals(1, ledger.encounters().size());
     assertTrue(ledger.active());
-    assertEquals("Other", ledger.current().events.get(0).player);
+    assertEquals(
+        "Other",
+        ledger.current().events.stream()
+            .filter(e -> !e.type.equals("Death"))
+            .findFirst()
+            .get()
+            .player);
   }
 
   @Test

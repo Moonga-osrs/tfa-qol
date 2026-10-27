@@ -2,6 +2,7 @@ package tv.moonga.tfaqol;
 
 /** Explicit allowlist: adding an observation does not silently add a new mistake category. */
 enum MistakeKind {
+  DEATH(null, "Death", "death", "Observed death during this encounter; the cause is not assigned."),
   XARTH_MAGIC(
       TfaBoss.XARTH,
       "Magic hit off prayer",
@@ -237,6 +238,8 @@ enum MistakeKind {
   }
 
   static MistakeKind find(TfaBoss boss, String type) {
+    if (boss == null) return null;
+    if ("Death".equals(type)) return DEATH;
     for (MistakeKind k : values())
       if (k.boss == boss && ("Possible " + k.label).equals(type)) return k;
     return null;

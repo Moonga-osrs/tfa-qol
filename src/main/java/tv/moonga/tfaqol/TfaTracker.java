@@ -814,8 +814,12 @@ public final class TfaTracker {
     }
     if (!(e.getActor() instanceof Player)) return;
     Player p = (Player) e.getActor();
-    if (inArea(p) || ledger.current().players.contains(name(p))) {
+    if (p.getWorldView() == view
+        && p.getWorldLocation().getPlane() == plane
+        && (inArea(p) || ledger.current().players.contains(name(p)))) {
       deathCycles.put(name(p), client.getGameCycle());
+      if (config.trackOthers() || p == client.getLocalPlayer())
+        ledger.death(name(p), client.getTickCount(), client.getGameCycle());
       ledger.current().deadPlayers.add(name(p));
       if (borkActive()) borkObserver.excludePlayers(Collections.singleton(name(p)));
     }
@@ -884,7 +888,7 @@ public final class TfaTracker {
   private Map<String, Object> report(String reason) {
     Map<String, Object> report = new LinkedHashMap<>();
     report.put("schemaVersion", 2);
-    report.put("pluginVersion", "1.0.1");
+    report.put("pluginVersion", "1.0.2");
     report.put(
         "scope",
         "Archive Guardian, Ezekiel, Bork and the Smorks, Dreadnoth, Xarth, Ocellus; possible"

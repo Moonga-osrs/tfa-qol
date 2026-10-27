@@ -101,8 +101,11 @@ public class MistakeLedgerTest {
     l.hit("A", 3, true, 1, 1, 0, 0, 10, 100);
     l.hit("A", 4, true, 1, 1, 0, 0, 10, 101);
     l.drain(140, false);
-    assertEquals(1, l.current().events.size());
-    assertEquals(7, l.current().events.get(0).damage);
+    assertEquals(2, l.current().events.size());
+    assertEquals(1, l.current().events.stream().filter(e -> e.type.equals("Death")).count());
+    assertEquals(
+        7,
+        l.current().events.stream().filter(e -> !e.type.equals("Death")).findFirst().get().damage);
   }
 
   @Test

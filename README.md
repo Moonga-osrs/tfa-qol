@@ -11,6 +11,7 @@ A standalone Java 11 RuneLite plugin for The Fractured Archive. It does not requ
 - **Hidden loot**: hide the sparkle on your own chests until crossing the reveal threshold (disabled by default). These features adapt LlemonDuck's implementation with its BSD-2-Clause attribution retained.
 - Local side-panel observations for Archive Guardian, Ezekiel, Bork and the Smorks, Dreadnoth, Xarth and Ocellus.
 - Impact-time protection-prayer checks where supported; ambiguity and status damage remain separate from automatic mistake counters.
+- Observed deaths appear as skull counters, once per player per tracked encounter; no cause of death is inferred.
 - Optional tracking of Bork tank hits and Ocellus P1 floor cracks.
 - Manual `::safetiles 1`, `2`, `3`, `4`, `p1`, `p2`, `p3`, and `off` commands. Portal mode uses the current visible pattern only, without forecasting a future pattern.
 - Local JSON reports under RuneLite's dedicated plugin directory. Nothing is uploaded. The Report location action displays the directory; it does not launch an external application.

@@ -22,3 +22,5 @@ Flame ground: object 62544 model 62729.
 Bomb: projectile 4440 model 2413.
 
 Xarth charged: Corpse NPC 16687, cache model 62515. Rendered with RenderCorpseIcon.java using the existing RenderTfaIcons renderer.
+
+Death: Old School cache sprite 439 (PLAYER_KILLER_SKULL), frame 0. Game artwork belongs to Jagex.

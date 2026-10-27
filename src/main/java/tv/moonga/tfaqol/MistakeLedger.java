@@ -155,7 +155,7 @@ public final class MistakeLedger {
   }
 
   public void death(String player, int tick, int cycle) {
-    if (active())
+    if (active() && current.deadPlayers.add(player))
       add(new Event(tick, cycle, player, "Death", "Observed death event; cause not attributed", 0));
   }
 

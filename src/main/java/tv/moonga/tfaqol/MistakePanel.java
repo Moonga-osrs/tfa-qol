@@ -274,7 +274,7 @@ final class MistakePanel extends PluginPanel {
           quantity.setFont(quantity.getFont().deriveFont(Font.BOLD, 11f));
           image.add(quantity, BorderLayout.NORTH);
           String tip =
-              kind.boss.label
+              fight.boss.label
                   + " - "
                   + kind.label
                   + ": "

@@ -144,7 +144,9 @@ public class TrackerScopeTest {
   public void deathIsObservedWithoutGuessingCause() throws Exception {
     start();
     tracker.onActorDeath(new ActorDeath(teammate));
-    assertTrue(ledger().current().events.isEmpty());
+    assertEquals(1, ledger().current().events.size());
+    assertEquals("Death", ledger().current().events.get(0).type);
+    assertEquals(0, ledger().current().events.get(0).damage);
   }
 
   @Test
@@ -167,7 +169,7 @@ public class TrackerScopeTest {
     tracker.onGameStateChanged(loading);
     assertSame(original, ledger().current());
     assertTrue(ledger().active());
-    assertEquals(1, ledger().current().events.size());
+    assertEquals(2, ledger().current().events.size());
   }
 
   @Test
@@ -176,7 +178,43 @@ public class TrackerScopeTest {
     tracker.onActorDeath(new ActorDeath(self));
     hit(teammate, HitsplatID.DAMAGE_OTHER, 20);
     ledger().drain(140, false);
+    assertEquals(2, ledger().current().events.size());
+    assertEquals(
+        "Teammate",
+        ledger().current().events.stream()
+            .filter(e -> !e.type.equals("Death"))
+            .findFirst()
+            .get()
+            .player);
+  }
+
+  @Test
+  public void duplicateDeathsOnlyProduceOneSkullPerEncounter() throws Exception {
+    start();
+    tracker.onActorDeath(new ActorDeath(teammate));
+    when(client.getTickCount()).thenReturn(12);
+    when(client.getGameCycle()).thenReturn(160);
+    tracker.onActorDeath(new ActorDeath(teammate));
+    assertEquals(1, ledger().current().events.stream().filter(e -> e.type.equals("Death")).count());
+  }
+
+  @Test
+  public void selfOnlyDeathsIgnoreTeammatesButKeepLocalDeath() throws Exception {
+    settings.others = false;
+    start();
+    tracker.onActorDeath(new ActorDeath(teammate));
+    tracker.onActorDeath(new ActorDeath(self));
     assertEquals(1, ledger().current().events.size());
-    assertEquals("Teammate", ledger().current().events.get(0).player);
+    assertEquals("Self", ledger().current().events.get(0).player);
+  }
+
+  @Test
+  public void spectatorsAndParticipantsInOtherViewsDoNotGetSkulls() throws Exception {
+    start();
+    tracker.onActorDeath(new ActorDeath(spectator));
+    ledger().participant("Teammate");
+    when(teammate.getWorldView()).thenReturn(mock(WorldView.class));
+    tracker.onActorDeath(new ActorDeath(teammate));
+    assertTrue(ledger().current().events.isEmpty());
   }
 }
