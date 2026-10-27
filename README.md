@@ -7,6 +7,8 @@ A standalone Java 11 RuneLite plugin for The Fractured Archive. It does not requ
 ## Features
 
 - Archive Door spellbook and chinchompa reminders; optional right-click requirement when chinchompas are missing.
+- **Bank-all single click** in the TFA lobby and loot room (enabled by default).
+- **Hidden loot**: hide the sparkle on your own chests until crossing the reveal threshold (disabled by default). These features adapt LlemonDuck's implementation with its BSD-2-Clause attribution retained.
 - Local side-panel observations for Archive Guardian, Ezekiel, Bork and the Smorks, Dreadnoth, Xarth and Ocellus.
 - Impact-time protection-prayer checks where supported; ambiguity and status damage remain separate from automatic mistake counters.
 - Optional tracking of Bork tank hits and Ocellus P1 floor cracks.

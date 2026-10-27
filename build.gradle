@@ -1,6 +1,6 @@
 plugins { id 'java' }
 group = 'tv.moonga'
-version = '1.0.0'
+version = '1.0.1'
 repositories {
     maven { url 'https://repo.runelite.net'; content { includeGroupByRegex 'net\\.runelite.*' } }
     mavenCentral()

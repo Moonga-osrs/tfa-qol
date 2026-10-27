@@ -36,6 +36,10 @@ public class PluginGateTest {
     settings = new Settings();
     inject(plugin, "client", client);
     inject(plugin, "config", settings);
+    LootOptions loot = new LootOptions();
+    inject(loot, "client", client);
+    inject(loot, "config", settings);
+    inject(plugin, "loot", loot);
     when(client.getGameState()).thenReturn(GameState.LOGGED_IN);
     when(client.getItemContainer(InventoryID.INVENTORY)).thenReturn(inventory);
     when(inventory.getItems()).thenReturn(new Item[0]);

@@ -5,6 +5,33 @@ import net.runelite.client.config.*;
 @ConfigGroup("moongaTfaQol")
 public interface TfaConfig extends Config {
   @ConfigSection(
+      name = "Loot",
+      description = "TFA loot-room options",
+      position = 15,
+      closedByDefault = true)
+  String LOOT = "loot";
+
+  @ConfigItem(
+      keyName = "bankAllSingleClick",
+      name = "Bank-all single click",
+      description = "Use Bank-all with one click in the TFA lobby and loot room.",
+      position = 0,
+      section = LOOT)
+  default boolean bankAllSingleClick() {
+    return true;
+  }
+
+  @ConfigItem(
+      keyName = "hiddenLoot",
+      name = "Hidden loot",
+      description = "Hide the sparkle on your own chests.",
+      position = 1,
+      section = LOOT)
+  default boolean hiddenLoot() {
+    return false;
+  }
+
+  @ConfigSection(
       name = "Mistake tracker",
       description = "TFA observations for yourself and visible teammates",
       position = 0,

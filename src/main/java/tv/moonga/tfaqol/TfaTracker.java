@@ -884,7 +884,7 @@ public final class TfaTracker {
   private Map<String, Object> report(String reason) {
     Map<String, Object> report = new LinkedHashMap<>();
     report.put("schemaVersion", 2);
-    report.put("pluginVersion", "1.0.0");
+    report.put("pluginVersion", "1.0.1");
     report.put(
         "scope",
         "Archive Guardian, Ezekiel, Bork and the Smorks, Dreadnoth, Xarth, Ocellus; possible"

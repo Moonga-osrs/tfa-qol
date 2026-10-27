@@ -25,6 +25,7 @@ public class TfaQolPlugin extends Plugin {
   @Inject private TfaConfig config;
   @Inject private TfaTracker tracker;
   @Inject private SafeTilesOverlay safeTiles;
+  @Inject private LootOptions loot;
   private final Overlay overlay = new EntranceOverlay();
   private final EntranceReset entranceReset = new EntranceReset();
   private List<GameObject> doors = Collections.emptyList();
@@ -43,17 +44,36 @@ public class TfaQolPlugin extends Plugin {
         () -> {
           refreshDoors();
           safeTiles.refresh();
+          loot.tick();
         });
   }
 
   @Override
   protected void shutDown() {
     entranceReset.cancel();
+    loot.shutdown();
     tracker.shutdown();
     overlays.remove(overlay);
     overlays.remove(safeTiles);
     safeTiles.reset();
     doors = Collections.emptyList();
+  }
+
+  @Subscribe
+  public void onGraphicChanged(GraphicChanged e) {
+    loot.graphic(e.getActor());
+  }
+
+  @Subscribe
+  public void onVarbitChanged(VarbitChanged e) {
+    if (e.getVarbitId() == net.runelite.api.gameval.VarbitID.TFA_VAULT_OWN_CHEST)
+      loot.ownChestChanged();
+  }
+
+  @Subscribe
+  public void onLootConfigChanged(net.runelite.client.events.ConfigChanged e) {
+    if ("moongaTfaQol".equals(e.getGroup()) && "hiddenLoot".equals(e.getKey()))
+      clientThread.invokeLater(loot::tick);
   }
 
   @Subscribe
@@ -95,6 +115,7 @@ public class TfaQolPlugin extends Plugin {
   @Subscribe(priority = -1000)
   public void onMenuEntryAdded(MenuEntryAdded e) {
     updateMenu(new MenuEntry[] {e.getMenuEntry()});
+    loot.bankAll(e.getMenuEntry());
   }
 
   @Subscribe(priority = -1000)
@@ -142,6 +163,7 @@ public class TfaQolPlugin extends Plugin {
 
   @Subscribe(priority = 1000)
   public void onGameTick(GameTick e) {
+    loot.tick();
     safeTiles.refresh();
     if (client.getGameState() == GameState.LOGGED_IN) {
       Player p = client.getLocalPlayer();
@@ -161,6 +183,9 @@ public class TfaQolPlugin extends Plugin {
 
   @Subscribe
   public void onGameStateChanged(GameStateChanged e) {
+    if (e.getGameState() == GameState.LOGIN_SCREEN
+        || e.getGameState() == GameState.HOPPING
+        || e.getGameState() == GameState.CONNECTION_LOST) loot.discard();
     if (e.getGameState() != GameState.LOGGED_IN) safeTiles.clear();
     if (e.getGameState() != GameState.LOGGED_IN) doors = Collections.emptyList();
     if (e.getGameState() == GameState.LOGIN_SCREEN
