@@ -1,0 +1,16 @@
+.gradle/
+**/build/
+preview/
+.idea/
+*.iml
+*.log
+.env
+.runelite/
+reports/
+recordings/
+*.jsonl
+plugins.json
+catalog.json
+*.jar
+!gradle/wrapper/gradle-wrapper.jar
+validation/

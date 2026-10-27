@@ -1,0 +1,23 @@
+plugins { id 'java' }
+group = 'tv.moonga'
+version = '1.0.0'
+repositories {
+    maven { url 'https://repo.runelite.net'; content { includeGroupByRegex 'net\\.runelite.*' } }
+    mavenCentral()
+}
+dependencies {
+    compileOnly 'net.runelite:client:1.13.4'
+    testImplementation 'net.runelite:client:1.13.4'
+    testImplementation 'junit:junit:4.13.2'
+    testImplementation 'org.mockito:mockito-core:4.11.0'
+}
+tasks.withType(JavaCompile).configureEach { options.release.set(11); options.encoding = 'UTF-8' }
+test { systemProperty 'java.awt.headless', 'true' }
+
+tasks.register('run', JavaExec) {
+    dependsOn testClasses
+    classpath = sourceSets.test.runtimeClasspath
+    mainClass = 'tv.moonga.tfaqol.TfaQolDevelopment'
+    jvmArgs '-ea:tv.moonga...', '-ea:net.runelite.client.externalplugins.ExternalPluginManager'
+    args '--developer-mode', '--debug'
+}

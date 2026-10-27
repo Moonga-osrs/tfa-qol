@@ -1,0 +1,24 @@
+Images rendered locally from the user's Old School cache. No TOB/TOA art copied.
+Cabbage: item 1965, inventory model 8195; RuneLite cache ItemSpriteFactory renders the inventory sprite, 36x32.
+Guardian: NPC 16659 models 62570 + 62571.
+Vine: NPC 16664 model 62569 (unanimated reference pose).
+Mushroom: objects 62578/62579/62580 model 62663.
+Ranged: GFX 4199 model 62575.
+Crash: GFX 4202 model 62572.
+Firebreath: GFX 4204 model 62574.
+Ezekiel: NPC 16652 models 62634 + 62632 + 62633.
+Tegelzwaai: GFX 4394 model 46395.
+Zwaardgolf: GFX 4170 model 62644.
+Tegeldans: GFX 4197 model 62638.
+Models are unanimated orthographic build-time thumbnails; they are not a simulation of attack timing.
+Reproduction helpers: tools/RenderTfaIcons.java and tools/RenderCabbageItem.java.
+Game assets belong to Jagex.
+
+Bork: NPC 16640, models 62586 + 62584 + 62585.
+Bork floor: GFX 4395 model 46395 (shares base model with 4394; different animation).
+Smorks ranged: projectile 4056 model 62731.
+Smorks magic: projectile 4057 model 62721.
+Flame ground: object 62544 model 62729.
+Bomb: projectile 4440 model 2413.
+
+Xarth charged: Corpse NPC 16687, cache model 62515. Rendered with RenderCorpseIcon.java using the existing RenderTfaIcons renderer.
